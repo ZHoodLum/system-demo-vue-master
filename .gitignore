@@ -1,0 +1,4 @@
+# Editor directories and files
+.idea
+build/
+node_modules/
