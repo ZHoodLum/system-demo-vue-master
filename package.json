@@ -17,6 +17,9 @@
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.13.2",
     "js-md5": "^0.7.3",
+    "lib-flexible": "^0.3.2",
+    "postcss-px2rem-exclude": "0.0.6",
+    "svg-sprite-loader": "^5.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
@@ -67,6 +70,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
+    "px2rem-loader": "^0.1.9",
     "rimraf": "^2.6.0",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.1",
@@ -94,5 +98,14 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {},
+      "postcss-px2rem-exclude": {
+        "remUnit": 192,
+        "exclude": "/node_modules|floder_name/i"
+      }
+    }
+  }
 }
