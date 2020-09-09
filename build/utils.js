@@ -32,11 +32,11 @@ exports.cssLoaders = function (options) {
   //---------------------------------------------------自适应PC端分辨率改动start------------------------------------------------------------------//
   // 新增方法------------》remUnit 选项意思是 1rem=多少像素
   const px2remLoader = {
-      loader: 'px2rem-loader',
-      options: {
-        remUnit: 75
-      }
+    loader: 'px2rem-loader',
+    options: {
+      remUnit: 75
     }
+  }
 
   // 修改方法------------》 generate loader string to be used with extract text plugin
   //将px2remLoader放入loaders数组中
@@ -50,16 +50,12 @@ exports.cssLoaders = function (options) {
   //       })
   //     })
   //   }
-
-    //重写generateLoaders方法
-    function generateLoaders (loader, loaderOptions) {
-      const loaders = [cssLoader, px2remLoader]
-      if (options.usePostCSS) {
-        loaders.push(postcssLoader)
-      }
-
-    //-------------------------------------------------自适应PC端分辨率改动end--------------------------------------------------------------------//
-
+  //重写generateLoaders方法
+  function generateLoaders (loader, loaderOptions) {
+    const loaders = [cssLoader, px2remLoader]
+    if (options.usePostCSS) {
+      loaders.push(postcssLoader)
+    }
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
@@ -71,6 +67,8 @@ exports.cssLoaders = function (options) {
       return ['vue-style-loader'].concat(loaders)
     }
   }
+
+  //-------------------------------------------------自适应PC端分辨率改动end--------------------------------------------------------------------//
 
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {

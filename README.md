@@ -31,7 +31,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 
 ## 项目说明
-使用vue框架开发的一个前端项目
+使用vue框架开发的一个前端项目，学习vue框架
 
 ## 项目创建
 使用webStorm进行创建vue项目

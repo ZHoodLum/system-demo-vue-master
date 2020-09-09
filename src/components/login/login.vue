@@ -1,43 +1,63 @@
 <template>
-  <div class="login-form-layout">
-    <div class="avtar_box">
-      <img src="../../assets/companyTitle.png">
-    </div>
+  <div class="mainStyle">
+    <!--登陆界面样式-->
+    <el-card  class="login-container">
+      <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px">
+        <div style="text-align: center">
+          <svg-icon icon-class="login-img" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
+        </div>
+        <h5 class="title fontColor">系统登陆</h5>
 
-    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px" class="demo-loginForm login-container">
-      <h3 class="title">系统登陆</h3>
+        <el-form-item prop="userAccount">
+          <el-input type="text" v-model="loginForm.userAccount" auto-complete="off" placeholder="账号">
+            <span slot="prefix">
+            <svg-icon icon-class="user" class="fontColor"></svg-icon>
+          </span>
+          </el-input>
+        </el-form-item>
 
-      <el-form-item prop="userAccount">
-        <el-input type="text" v-model="loginForm.userAccount" auto-complete="off" placeholder="账号"></el-input>
-      </el-form-item>
+        <el-form-item prop="userPassword">
+          <el-input :type="pwdType" v-model="loginForm.userPassword" placeholder="密码">
+             <span slot="prefix">
+                <svg-icon icon-class="password" class="fontColor"></svg-icon>
+              </span>
+            <span slot="suffix" @click="showPwd">
+                <svg-icon icon-class="eye" class="fontColor eye-main"></svg-icon>
+              </span>
+          </el-input>
+        </el-form-item>
 
-      <el-form-item prop="userPassword">
-        <el-input type="password" v-model="loginForm.userPassword" auto-complete="off"
-                  placeholder="密码"></el-input>
-      </el-form-item>
+        <el-checkbox v-model="checked" prop="checked" checked class="remember">记住密码</el-checkbox>
 
-      <el-checkbox v-model="checked" prop="checked" checked class="remember">记住密码</el-checkbox>
+        <el-form-item style="width:100%;text-align: center">
+          <el-button type="primary" :plain="true" :loading="loginLoading" style="width:46%;"
+                     @click="resetForm('loginForm')">重置
+          </el-button>
 
-      <el-form-item style="width:100%;">
-        <el-button type="primary" :plain="true" :loading="loginLoading" style="width:48%;" @click="resetForm('loginForm')">重置
-        </el-button>
+          <el-button type="primary" :plain="true" :loading="loginLoading" style="width:46%;"
+                     @click="submitForm('loginForm')">登录
+          </el-button>
+        </el-form-item>
 
-        <el-button type="primary" :plain="true" :loading="loginLoading" style="width:48%;" @click="submitForm('loginForm')">登录
-        </el-button>
-      </el-form-item>
-
-    </el-form>
+      </el-form>
+    </el-card >
+    <img :src="login_bg" class="login-center-layout">
   </div>
 
 
 </template>
 
 <script>
+  import login_bg from "../../assets/images/login_bg.png"
+
   export default {
     data: function () {
       return {
+        login_bg,
         //是否加载
         loginLoading: false,
+        //密码类型
+        pwdType: 'password',
         //c初始化值
         loginForm: {
           userAccount: '',
@@ -76,80 +96,83 @@
         })
       },
       //重置
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
         this.$message({
           showClose: true,
           message: '重置信息成功！',
           type: 'success'
-        });
-      }
+        })
+      },
+      showPwd () {
+        if (this.pwdType === 'password') {
+          this.pwdType = ''
+        } else {
+          this.pwdType = 'password'
+        }
+      },
     }
 
   }
 
 </script>
 
-<style  lang="less" scoped>
-
+<style lang="less" scoped>
   /*输入框表单样式*/
   .login-container {
-    /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
+    /*防止此DIV被上一层div(login-center-layout)覆盖掉*/
+    position: relative;
+    /*绝对定位*/
+    z-index: 1;
+
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
     background-clip: padding-box;
-    /*margin: 118px auto 168px auto;*/
-    margin: 0 auto;
-    width: 350px;
-    padding: 35px 35px 15px 35px;
-    border: 1px solid #eaeaea;
+    margin: 50px auto;
+    width: 150px;
+    padding: 5px 15px 5px 15px;
+    /*border: 1px solid #eaeaea;*/
     box-shadow: 0 0 25px #cac6c6;
-    border-top: 15px solid #0754ff;
-    background: #cac6c6;
-  }
-
-  /*最外层的div样式  整个样式顺序不可以颠倒噢*/
-  .login-form-layout {
-    width: 100%;
-    height: 99.7%;
-    background: url("../../assets/background-01.png") no-repeat center center;
-    background-size: 100% 100%;
-    padding: 150px 0 0 0;
-    box-sizing: border-box;
-    border: 1px solid #eaeaea;
-    /*background: rgba(9, 18, 114, 0.67);*/
-  }
-
-  .avtar_box{
-    height: 130px;
-    width: 130px;
-    border: 1px solid #eee;
-    border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 0 10px #ddd;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    img{
-      height: 100%;
-      width: 100%;
-      border-radius: 50%;
-      background-color: #eee;
-    }
+    border-top: 10px solid #409EFF;
+    /*background: #cac6c6;*/
+    background: white;
   }
 
   /*标题*/
   .title {
-    margin: 50px auto 40px auto;
+    padding: 5px 0px 5px 0px;
+    font-size: 13px;
+    margin: 0 auto;
     text-align: center;
-    color: #505458;
+    color: #288aff;
+
+  }
+
+  //字体颜色
+  .fontColor {
+    color: #409EFF;
+  }
+
+  /*密码文本框眼睛位置*/
+  .eye-main {
+    padding-right: 5px;
   }
 
   /*记住密码*/
   .remember {
-    margin: 0px 0px 35px 0px;
+    margin: 0px 0px 15px 0px;
+  }
+
+  .login-center-layout {
+    background: #409EFF;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    top: 80px;
+    /*防止此DIV把上一层div(login-container)覆盖掉*/
+    position: absolute;
   }
 
 </style>
