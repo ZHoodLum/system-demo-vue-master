@@ -166,11 +166,12 @@
 
   .login-center-layout {
     background: #409EFF;
-    width: auto;
+    /*background-size: auto 100%;*/
+    width: 100%;
     height: auto;
     max-width: 100%;
     max-height: 100%;
-    top: 80px;
+    top: 70px;
     /*防止此DIV把上一层div(login-container)覆盖掉*/
     position: absolute;
   }

@@ -13,12 +13,14 @@ export default {
 <style>
   html,body,#app {
     /*border: 1px solid red;*/
-    height: 99vh;
+    /*height: 99vh;*/
+    height: auto;
+    max-height: 100%;
     margin: 0 auto;
     padding: 0 auto;
     /*绝对定位*/
     z-index: 1;
-    position: absolute;
+    position: page;
     top: 0;
     bottom: 0;
     left: 0;
@@ -30,13 +32,13 @@ export default {
   }
 
   /*是否有滚动条*/
-  ::-webkit-scrollbar {
-    width: 0 !important;
-  }
+  /*::-webkit-scrollbar {*/
+    /*width: 0 !important;*/
+  /*}*/
 
-  ::-webkit-scrollbar {
-    width: 0 !important;
-    height: 0;
-  }
+  /*::-webkit-scrollbar {*/
+    /*width: 0 !important;*/
+    /*height: 0;*/
+  /*}*/
 
 </style>
