@@ -4,7 +4,7 @@
     <el-card  class="login-container">
       <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px">
         <div style="text-align: center">
-          <svg-icon icon-class="login-img" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
+          <svg-icon icon-class="loginImg" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
         </div>
         <h5 class="title fontColor">系统登陆</h5>
 
