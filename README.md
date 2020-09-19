@@ -53,3 +53,6 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 > 组件库图标地址：https://www.iconfont.cn/collections/index?spm=a313x.7781069.1998910419.d33146d14&type=3&page=3
 > 阿里图标组件库：https://www.iconfont.cn/
+
+* 全局引用CSS
+import './assets/css/index.scss'
