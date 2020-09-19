@@ -20,6 +20,10 @@ Vue.config.productionTip = false
 Vue.use(elementUI)
 Vue.component(elementUITreeGrid.name,elementUITreeGrid)
 
+//全局引用CSS
+import './assets/css/index.scss'
+
+
 new Vue({
   el: '#app',
   router,
