@@ -1,55 +1,41 @@
 <template>
-  <div>
-    <el-container class="mainStyle">
+    <el-container style="height: 100%">
       <!--左侧菜单栏-->
       <el-aside :width="isCollapse ? 'auto' : 'auto'">
         <!--<el-button type="warning" circle @click="updateIsCollapse()"></el-button>-->
         <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-                 :collapse="isCollapse"
-                 background-color="#545c64"
-                 text-color="#fff"
-                 active-text-color="#ffd04b">
-          <el-row>
-            <el-col style=" box-sizing: border-box; width: 100%">
+                 :collapse="isCollapse" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b"
+                 :collapse-transition="false"
+                 :router="true">
 
-              <el-menu-item index="1-1-11" style="box-sizing: border-box; width: 100%;padding-left: 10%">
+              <el-menu-item index="1-1-11"style="">
                 <i class="el-icon-menu"></i><span slot="title">首页</span>
               </el-menu-item>
 
+              <!--<template v-for="(item,index) in leftMenuInfo">-->
               <template v-for="(item,index) in leftMenuInfo">
-                <!--如果有子节点，则开始遍历-->
-                <div v-if="item.children != null  && item.children.length > 0">
-                  <!--先创建一个菜单按钮-->
-                  <el-submenu :index="index+''" style="box-sizing: border-box; width: 100%;">
+                <!--如果没有子节点-->
+                <el-menu-item :index="index+''" :key="index" v-if="item.children == null  && item.children.length < 0">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">{{item.menuName}}</span>
+                </el-menu-item>
 
-                    <template slot="title" style="padding-left: 10%">
+                <!--如果有子节点，则开始遍历-->
+                  <!--先创建一个菜单按钮-->
+                  <el-submenu :index="index+''"  v-if="item.children != null  && item.children.length > 0">
+                    <template slot="title">
                       <i class="el-icon-location"></i><span slot="title">{{item.menuName}}</span>
                     </template>
 
-                    <el-submenu index="1-4">
-                      <template slot="title">选项4</template>
-                      <el-menu-item index="1-4-1">选项1</el-menu-item>
-                    </el-submenu>
-
                     <!--遍历该节点下的子节点  children-->
-                    <template v-for="(child,index)  in item.children">
-                      <el-menu-item>
+                    <!--<el-menu-item-group>-->
+                      <el-menu-item v-for="(child,index)  in item.children">
                         <el-menu-item :index="index+''">{{child.menuName}}</el-menu-item>
                       </el-menu-item>
-                    </template>
+                    <!--</el-menu-item-group>-->
 
                   </el-submenu>
-                </div>
-                <!--二级菜单 没有子集的二级菜单-->
-                <div v-else>
-                  <el-menu-item :index="index+''" style="box-sizing: border-box; width: 100%;padding-left: 10%">
-                    <i class="el-icon-setting"></i><span slot="title">{{item.menuName}}</span>
-                  </el-menu-item>
-                </div>
               </template>
-
-            </el-col>
-          </el-row>
         </el-menu>
       </el-aside>
       <!--右侧部分-->
@@ -68,10 +54,6 @@
 
       </el-container>
     </el-container>
-
-  </div>
-
-
 </template>
 <script>
   export default {
@@ -196,10 +178,20 @@
 <style lang="less" scoped>
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     box-sizing: border-box;
-    width: 80px;
+    width: 100px;
     height: 100%;
-    min-height: auto;
-    padding-bottom: 100px;
+    text-align: left;
+    margin: 0 auto;
+    padding-left: 0px;
+  }
+
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+
+    margin: 0 auto;
+    padding: 0 auto;
+    line-height: 200px;
   }
 
   .el-main {
@@ -207,6 +199,8 @@
     color: #333;
     text-align: center;
     line-height: 160px;
+    padding-bottom: 100px;
   }
+
 
 </style>
