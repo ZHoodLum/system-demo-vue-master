@@ -1,6 +1,5 @@
 <template>
-  <div class="reMenu">
-
+  <div>
     <template v-for="reMenu in data">
       <!-- 最后一级菜单 -->
       <el-menu-item v-if="!reMenu.childs&&reMenu" :key="reMenu.id" :data="reMenu" :index="reMenu.url">
@@ -13,7 +12,7 @@
 
         <template slot="title">
           <i :class="reMenu.icon"></i>
-          <span> {{reMenu.alias}}</span>
+          <span>{{reMenu.alias}}</span>
         </template>
         <!-- 递归 -->
         <reMenu :data="reMenu.childs"></reMenu>

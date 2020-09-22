@@ -1,16 +1,23 @@
 <template>
-  <el-container style="height: 100%;">
+  <el-container style="height: 100%;" class="mainStyle">
     <!--左侧菜单栏样式-->
-    <el-aside width=30vh>
-      <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" style="height: 100%; font-family: 'Microsoft YaHei';font-size: 14vh;"
+    <!--<el-aside width=30vh  :width="isCollapse ? 'auto' : 'auto'">-->
+    <el-aside :width="isCollapse ? 'auto' : 'auto'">
+      <el-menu background-color="#545c64"
+               class="el-menu-vertical-demo"
+               text-color="#fff"
+               active-text-color="#ffd04b"
                :default-active="$route.path"
                :router="true"
                @open="handleOpen"
                @close="handleClose"
-               :defaultSelectedKeys="items">
+               :collapse="isCollapse"
+               :collapse-transition = "false"
+                style="height: 100%;font-family: 'Microsoft YaHei';font-size: 14vh; width:auto">
 
-        <el-menu-item @click.native="logout" style="height:6vh ">
-          <i class="el-icon-menu"></i>
+        <el-menu-item @click.native="updateIsCollapse()"  v-model="isCollapse" >
+          <!--<i class="el-icon-menu"></i>-->
+          <i class="el-icon-loading"></i>
           <span slot="title">mini管理平台</span>
         </el-menu-item>
         <!--递归组件 实现动态菜单样式-->
@@ -20,12 +27,14 @@
 
     <!--界面头样式-->
     <el-container>
-      <el-header height="6vh" style=" background-color:#545c64;">
+      <el-header height="6.2vh" style=" background-color:#545c64">
         <div class="userInfo">
           <el-dropdown trigger="hover">
-            <el-avatar icon="el-icon-user-solid"></el-avatar>
+            <svg-icon icon-class="profilePhoto" style="width: 5vh;height: 5vh;"></svg-icon>
+            <!--<el-avatar  class="userImg"> user </el-avatar>-->
+            <!--<el-avatar icon="el-icon-user-solid"  class="userImg"></el-avatar>-->
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item disabled class="userInfo-inner" style="">孙桑</el-dropdown-item>
+              <el-dropdown-item disabled class="userInfo-inner" style="">贺仁贤桑</el-dropdown-item>
               <el-dropdown-item divided @click.native="personalCenter">个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -50,12 +59,14 @@
 
   export default {
     name: 'home',
-    props: ['items'], // 接收父组件传的值，
     components: {
       reMenu: reMenu
     },
     data () {
       return {
+        //左侧菜单是否展开
+        // isCollapse: true,
+        isCollapse: false,
         loginUrl: '/',
         menuData: [
           {
@@ -255,6 +266,17 @@
       }
     },
     methods: {
+      updateIsCollapse () {
+        console.log('调用')
+        let _this = this.isCollapse
+        console.log(_this)
+
+        if (_this) {
+          this.isCollapse = false
+        } else {
+          this.isCollapse = true
+        }
+      },
       handleOpen (key, keyPath) {
         console.log(key, keyPath)
       },
@@ -266,14 +288,20 @@
 </script>
 
 <style lang="less" scoped>
+  /*头像DIV自适应*/
   .userInfo {
-    height: 3vh;
+    border: green 1px solid;
+    width: 5vh;height: 5vh;
     text-align: center;
-    padding: 1.2vh 2vh 2vh 0;
+    margin: 2px 7px 1px 0;
     float: right;
-    width: 3vh;
   }
-
+  /*头像自适应*/
+  .userImg {
+    height: 5vh;
+    width: 5vh;
+  }
+  /*头像下拉字体设置*/
   .userInfo-inner {
     font-family: 'Microsoft YaHei';
     font-size: 2vh;
@@ -281,4 +309,16 @@
     cursor: pointer;
   }
 
+</style>
+
+<style>
+  /*菜单导航折叠后文字不隐藏*/
+  /*隐藏文字*/
+  .el-menu--collapse  .el-submenu__title span{
+    display: none;
+  }
+  /*隐藏 > */
+  .el-menu--collapse  .el-submenu__title .el-submenu__icon-arrow{
+    display: none;
+  }
 </style>
