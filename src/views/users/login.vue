@@ -80,7 +80,7 @@
       submitForm (formName) {
         this.$refs[formName].validate(async valid => {
           if (valid) {
-            // const { data: res } = await this.$http.post('login', this.loginForm)
+            // const { data: res } = await this.$http.post('users', this.loginForm)
             // if (res.returnCode !== 200) return this.$message.error(res.returnMsg)
             // this.$message.success(res.returnMsg)
             // // 保存token在客户端的sessionStorage
@@ -120,7 +120,7 @@
 <style lang="less" scoped>
   /*输入框表单样式*/
   .login-container {
-    /*防止此DIV被上一层div(login-center-layout)覆盖掉*/
+    /*防止此DIV被上一层div(users-center-layout)覆盖掉*/
     position: relative;
     /*绝对定位*/
     z-index: 1;
@@ -172,7 +172,7 @@
     max-width: 100%;
     max-height: 100%;
     top: 70px;
-    /*防止此DIV把上一层div(login-container)覆盖掉*/
+    /*防止此DIV把上一层div(users-container)覆盖掉*/
     position: absolute;
   }
 

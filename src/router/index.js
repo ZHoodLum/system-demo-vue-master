@@ -1,23 +1,34 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 
-const login = () => import('@/components/login/login.vue');
-const homeIndex = () => import('@/components/home/index.vue');
+//用户
+const login = () => import('@/views/users/login.vue');
+const promiseManage = () => import('@/views/users/promiseManage.vue');
 
-Vue.use(Router)
+//主页
+const homeIndex = () => import('@/views/home/index.vue');
 
-export default new Router({
+
+
+export default new VueRouter({
   routes: [
     {
-      path: '/',
       name: 'login',
+      path: '/',
       component: login
     },
     {
+      name: 'home',
       path: '/home',
       component: homeIndex,
-      name: '',
-      hidden: true
+      children: [
+        {
+          name:'promiseManage',
+          path: '/promiseManage',
+          component: promiseManage
+        }
+        ]
     }
   ]
 })
