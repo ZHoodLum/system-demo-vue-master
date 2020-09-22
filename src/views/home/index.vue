@@ -1,16 +1,17 @@
 <template>
   <el-container style="height: 100%;">
     <!--左侧菜单栏样式-->
-    <el-aside width="15%">
-      <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" style="height: 100%;"
+    <el-aside width=30vh>
+      <el-menu background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" style="height: 100%; font-family: 'Microsoft YaHei';font-size: 14vh;"
                :default-active="$route.path"
                :router="true"
                @open="handleOpen"
                @close="handleClose"
                :defaultSelectedKeys="items">
 
-        <el-menu-item @click.native="logout">
-          <i class="el-icon-menu"></i><span slot="title">mini管理平台</span>
+        <el-menu-item @click.native="logout" style="height:6vh ">
+          <i class="el-icon-menu"></i>
+          <span slot="title">mini管理平台</span>
         </el-menu-item>
         <!--递归组件 实现动态菜单样式-->
         <reMenu :data="menuData"></reMenu>
@@ -19,17 +20,12 @@
 
     <!--界面头样式-->
     <el-container>
-      <el-header style=" background-color:#545c64;height: 13.1vh">
+      <el-header height="6vh" style=" background-color:#545c64;">
         <div class="userInfo">
           <el-dropdown trigger="hover">
-            <span class="userInfo-inner">
-              <div>
-                <el-avatar icon="el-icon-user-solid"></el-avatar>
-              </div>
-            </span>
+            <el-avatar icon="el-icon-user-solid"></el-avatar>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item disabled style="font-family: 'Microsoft YaHei';font-size: 5vh;color: black">孙桑
-              </el-dropdown-item>
+              <el-dropdown-item disabled class="userInfo-inner" style="">孙桑</el-dropdown-item>
               <el-dropdown-item divided @click.native="personalCenter">个人中心</el-dropdown-item>
               <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -271,17 +267,18 @@
 
 <style lang="less" scoped>
   .userInfo {
-    height: 6vh;
+    height: 3vh;
     text-align: center;
-    padding: 2vh 5vh 0 0;
+    padding: 1.2vh 2vh 2vh 0;
     float: right;
-    width: 12vh;
+    width: 3vh;
   }
 
   .userInfo-inner {
-    font-size: 10px;
+    font-family: 'Microsoft YaHei';
+    font-size: 2vh;
+    color: black;
     cursor: pointer;
-    color: #fff;
   }
 
 </style>
