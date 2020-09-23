@@ -3,36 +3,33 @@
     <!--左侧菜单栏样式-->
     <!--<el-aside width=30vh  :width="isCollapse ? 'auto' : 'auto'">-->
     <el-aside :width="isCollapse ? 'auto' : 'auto'">
-      <el-menu background-color="#545c64"
-               class="el-menu-vertical-demo"
-               text-color="#fff"
-               active-text-color="#ffd04b"
-               :default-active="$route.path"
+      <el-menu background-color="#545c64" class="el-menu-vertical-demo" text-color="#fff" active-text-color="#ffd04b"
+               :default-active="this.$route.path"
                :router="true"
                @open="handleOpen"
                @close="handleClose"
                :collapse="isCollapse"
-               :collapse-transition = "false"
-                style="height: 100%;font-family: 'Microsoft YaHei';font-size: 14vh; width:auto">
+               :collapse-transition="false"
+               style="height: 100%;font-family: 'Microsoft YaHei';font-size: 14vh; width:auto">
 
-        <el-menu-item @click.native="updateIsCollapse()"  v-model="isCollapse" >
+        <!--<el-menu-item @click.native="updateIsCollapse()"  v-model="isCollapse" :index="home" >-->
+        <el-menu-item :index='homeIndex'>
+        <!--<el-menu-item @click.native="addTab(editableTabsValue)">-->
           <!--<i class="el-icon-menu"></i>-->
           <i class="el-icon-loading"></i>
           <span slot="title">mini管理平台</span>
         </el-menu-item>
-        <!--递归组件 实现动态菜单样式-->
-        <reMenu :data="menuData"></reMenu>
+        <!--递归组件 实现动态菜单样式 reMenuAddTabs   showChildDeptTitle父组件方法 此处为子组件向父组件传值 -->
+        <reMenu :data="menuData" v-on:reMenuAddTabs="showChildDeptTitle"  ></reMenu>
       </el-menu>
     </el-aside>
 
-    <!--界面头样式-->
     <el-container>
-      <el-header height="6.2vh" style=" background-color:#545c64">
+      <!--界面头样式-->
+      <el-header height="6.2vh" style=" background-color:rgba(180,180,180,0.53)">
         <div class="userInfo">
           <el-dropdown trigger="hover">
             <svg-icon icon-class="profilePhoto" style="width: 5vh;height: 5vh;"></svg-icon>
-            <!--<el-avatar  class="userImg"> user </el-avatar>-->
-            <!--<el-avatar icon="el-icon-user-solid"  class="userImg"></el-avatar>-->
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item disabled class="userInfo-inner" style="">贺仁贤桑</el-dropdown-item>
               <el-dropdown-item divided @click.native="personalCenter">个人中心</el-dropdown-item>
@@ -41,36 +38,36 @@
           </el-dropdown>
         </div>
       </el-header>
-      <!--界面内容展示-->
-      <!--内容主题-->
+
+      <!--内容主题  界面内容展示-->
       <el-main>
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
+        <!--此处未父组件（home或index.vue）向子组件 navTabsIndex 传值-->
+        <navTabsIndex  ref="navTabsIndex"></navTabsIndex>
       </el-main>
     </el-container>
   </el-container>
-
-
 </template>
 
 <script>
-  import reMenu from '../../components/reMenu.vue'
+  import reMenu from '@/components/reMenu.vue'
+  import navTabsIndex from '@/components/navTabsIndex.vue'
 
   export default {
     name: 'home',
+    //引用的组件
     components: {
-      reMenu: reMenu
+      reMenu: reMenu,
+      navTabsIndex: navTabsIndex
     },
     data () {
       return {
+        //主页路由位置
+        homeIndex: 'main',
         //左侧菜单是否展开
-        // isCollapse: true,
         isCollapse: false,
-        loginUrl: '/',
         menuData: [
           {
-            id: 0,
+            id: 11,
             url: 'promiseManage',
             icon: 'el-icon-message',
             alias: '权限管理2',
@@ -85,7 +82,7 @@
             childs: [
               {
                 id: 3,
-                url: 'promiseManage',
+                url: 'navTabs2222',
                 icon: 'el-icon-loading',
                 alias: '权限管理3',
                 value: {path: '/promiseManage'}
@@ -262,12 +259,12 @@
               }
             ]
           }
-        ]
+        ],
       }
     },
     methods: {
+      //是否隐藏左侧菜单
       updateIsCollapse () {
-        console.log('调用')
         let _this = this.isCollapse
         console.log(_this)
 
@@ -278,11 +275,17 @@
         }
       },
       handleOpen (key, keyPath) {
-        console.log(key, keyPath)
+        // console.log(key, keyPath)
       },
       handleClose (key, keyPath) {
-        console.log(key, keyPath)
-      }
+        // console.log(key, keyPath)
+      },
+      //父组件调用子组件方法 navTabsIndex
+      showChildDeptTitle(routerUrl, tabName) {
+        // console.log('父组件' + routerUrl, tabName)
+        //父组件向子组件navTabsIndex 传值
+        this.$refs.navTabsIndex.addTab(routerUrl,tabName);
+      },
     }
   }
 </script>
@@ -290,17 +293,20 @@
 <style lang="less" scoped>
   /*头像DIV自适应*/
   .userInfo {
-    border: green 1px solid;
-    width: 5vh;height: 5vh;
+    /*border: green 1px solid;*/
+    /*width: 5vh;*/
+    height: 100%;
     text-align: center;
     margin: 2px 7px 1px 0;
     float: right;
   }
+
   /*头像自适应*/
   .userImg {
     height: 5vh;
     width: 5vh;
   }
+
   /*头像下拉字体设置*/
   .userInfo-inner {
     font-family: 'Microsoft YaHei';
@@ -314,11 +320,12 @@
 <style>
   /*菜单导航折叠后文字不隐藏*/
   /*隐藏文字*/
-  .el-menu--collapse  .el-submenu__title span{
+  .el-menu--collapse .el-submenu__title span {
     display: none;
   }
+
   /*隐藏 > */
-  .el-menu--collapse  .el-submenu__title .el-submenu__icon-arrow{
+  .el-menu--collapse .el-submenu__title .el-submenu__icon-arrow {
     display: none;
   }
 </style>

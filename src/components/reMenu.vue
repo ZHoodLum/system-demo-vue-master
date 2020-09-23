@@ -2,15 +2,14 @@
   <div>
     <template v-for="reMenu in data">
       <!-- 最后一级菜单 -->
-      <el-menu-item v-if="!reMenu.childs&&reMenu" :key="reMenu.id" :data="reMenu" :index="reMenu.url">
+      <el-menu-item v-if="!reMenu.childs&&reMenu" :key="reMenu.id" :data="reMenu" :index="reMenu.url"
+                    @click="reMenuAddTabs(reMenu.url,reMenu.alias)">
         <i :class="reMenu.icon"></i>
         <span slot="title">{{reMenu.alias}}</span>
       </el-menu-item>
-
       <!-- 此菜单下还有子菜单 -->
       <el-submenu v-if="reMenu.childs&&reMenu" :key="reMenu.id" :data="reMenu" :index="reMenu.url">
-
-        <template slot="title">
+        <template slot="title" @click="reMenuAddTabs(reMenu.url,reMenu.alias)">
           <i :class="reMenu.icon"></i>
           <span>{{reMenu.alias}}</span>
         </template>
@@ -18,7 +17,6 @@
         <reMenu :data="reMenu.childs"></reMenu>
       </el-submenu>
     </template>
-
   </div>
 </template>
 
@@ -26,12 +24,17 @@
   export default {
     name: 'reMenu',
     props: ['data'],
-    data() {
+    data () {
       return {}
     },
-    methods: {}
+    methods: {
+      reMenuAddTabs(routerUrl, tabName) {
+        // console.log('子组件reMenu' + routerUrl, tabName)
+        //子组件 reMenu  向父组件（home 或 index.vue）传值
+        this.$emit('reMenuAddTabs',routerUrl, tabName)
+      }
+    }
   }
 </script>
-
 <style>
 </style>

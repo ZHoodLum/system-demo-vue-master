@@ -88,7 +88,7 @@
             // window.sessionStorage.setItem('userId', res.data.user.userId)
             // window.sessionStorage.setItem('nikeName', res.data.user.nikeName)
             // 页面跳转
-            this.$router.push('/home')
+            this.$router.push('/main')
           } else {
             this.$message.error('error submit!!')
             return false
