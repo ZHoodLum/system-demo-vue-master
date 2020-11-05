@@ -6,17 +6,24 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
-    host: 'localhost', //当前项目IP地址  http://127.0.0.1:8080
-    port: 8080, // 访问的端口
-    autoOpenBrowser: false,
+    //当前项目IP地址  http://127.0.0.1:8080
+    host: 'localhost',
+    // 本地和局域网
+    // host: '0.0.0.0',
+    // 访问的端口
+    port: 8080,
+    // 配置自动启动浏览器
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
-    poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+    poll: false,
     useEslint: true,
     showEslintErrorsInOverlay: false,
-    devtool: 'cheap-module-eval-source-map',//Source Maps
+    //Source Maps
+    devtool: 'cheap-module-eval-source-map',
     cacheBusting: true,
-    cssSourceMap: true
+    cssSourceMap: true,
   },
 
   build: {

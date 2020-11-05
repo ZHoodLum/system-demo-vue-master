@@ -1,23 +1,24 @@
 <template>
-  <el-tabs v-model="activeKey" type="card" @tab-remove="removeTab" closable>
-    <el-tab-pane v-for="item in editableTabs"
-                 :key="item.key"
-                 :name="item.name"
-                 :label="item.label"
-    >
+  <el-tabs v-model="activeKey" type="card" closable
+           @tab-remove="removeTab"
+           @edit="onEdit"
+           @tab-click="onChange">
+
+    <el-tab-pane v-for="item in editableTabs" :key="item.key" :name="item.name" :label="item.label">
       <!--展示首页-->
-      <welcomeUsers v-if="item.key=='/navTabsIndex'"></welcomeUsers>
+      <welcomeUsers v-if="item.key=='/welcomeUsers'"></welcomeUsers>
       <!--展示其他标签页-->
       <keep-alive v-else>
         <router-view></router-view>
       </keep-alive>
     </el-tab-pane>
+
   </el-tabs>
 </template>
 
 <script>
   //欢迎页
-  import welcomeUsers from '@/views/users/welcomeUsers.vue'
+  import welcomeUsers from '../views/users/welcomeUsers.vue'
 
   export default {
     name: 'navTabsIndex',
@@ -25,7 +26,7 @@
       welcomeUsers: welcomeUsers
     },
     data () {
-      const editableTabs = [{label: '首页', name: '/navTabsIndex', key: '/navTabsIndex'}]
+      const editableTabs = [{label: '首页', name: '/welcomeUsers', key: '/welcomeUsers'}]
       return {
         //循环标签页导航栏
         editableTabs,
@@ -35,16 +36,19 @@
     },
     methods: {
       onChange (activeKey) {
-        this.$router.push(activeKey)
+        this.$router.push(this.activeKey)
       },
       onEdit (targetKey, action) {
-        this[action](targetKey)
-        console.log(this.panes)
+        console.log(targetKey)
+        this.activeKey = targetKey
+        this.$router.push(this.activeKey)
+        // this[action](targetKey)
+        console.log(this.activeKey)
       },
 
       //接收父组件（home 或index.vue ）传值
       addTab (routerUrl, tabName) {
-        // console.log('子组件navTabsIndex' + routerUrl, tabName + '|||||||v-model的值:' + this.activeKey)
+        console.log('子组件navTabsIndex______当前组件是：' + routerUrl + '||________||上一个组件是：' + this.activeKey)
         const editableTabs = this.editableTabs
         //路由地址
         const activeKey = routerUrl
@@ -56,6 +60,7 @@
             isSave = true
           }
         })
+        // console.log('是否为当前页----' + isSave)
         if (isSave == true) {
           this.activeKey = activeKey
           this.$router.push({
@@ -90,6 +95,9 @@
         }
         this.activeKey = activeName
         this.editableTabs = tabs.filter(tab => tab.name !== targetName)
+        //通过路由跳转到：
+        this.$router.push({path: activeName})
+        console.log('通过路由跳转到：' + activeName)
       }
     }
   }

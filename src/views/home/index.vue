@@ -12,15 +12,14 @@
                :collapse-transition="false"
                style="height: 100%;font-family: 'Microsoft YaHei';font-size: 14vh; width:auto">
 
-        <!--<el-menu-item @click.native="updateIsCollapse()"  v-model="isCollapse" :index="home" >-->
-        <el-menu-item :index='homeIndex'>
-        <!--<el-menu-item @click.native="addTab(editableTabsValue)">-->
+        <el-menu-item @click.native="updateIsCollapse()"  v-model="isCollapse">
+        <!--<el-menu-item :index='homeIndex'>-->
           <!--<i class="el-icon-menu"></i>-->
           <i class="el-icon-loading"></i>
           <span slot="title">mini管理平台</span>
         </el-menu-item>
         <!--递归组件 实现动态菜单样式 reMenuAddTabs   showChildDeptTitle父组件方法 此处为子组件向父组件传值 -->
-        <reMenu :data="menuData" v-on:reMenuAddTabs="showChildDeptTitle"  ></reMenu>
+        <reMenu :data="menuData" ref="reMenu" v-on:reMenuAddTabs="showChildDeptTitle" ></reMenu>
       </el-menu>
     </el-aside>
 
@@ -49,8 +48,9 @@
 </template>
 
 <script>
-  import reMenu from '@/components/reMenu.vue'
-  import navTabsIndex from '@/components/navTabsIndex.vue'
+  import reMenu from '../../components/reMenu.vue'
+  import navTabsIndex from '../../components/navTabsIndex.vue'
+  import Bus from '../../assets/js/commonBus.js';
 
   export default {
     name: 'home',
@@ -67,43 +67,48 @@
         isCollapse: false,
         menuData: [
           {
-            id: 11,
-            url: 'promiseManage',
+            id: 111,
+            url: '/welcomeUsers',
             icon: 'el-icon-message',
-            alias: '权限管理2',
+            alias: '首页',
+          },
+          {
+            id: 22,
+            url: '/promiseManage',
+            icon: 'el-icon-message',
+            alias: '第二个标签页',
           },
           {
             //一级
             id: 1,
-            url: 'systemManage',
+            url: '/systemManage',
             icon: 'el-icon-message',
             alias: '两级菜单',
             //二级
             childs: [
               {
-                id: 3,
-                url: 'navTabs2222',
+                id: 31,
+                url: 'welcomeUsers',
                 icon: 'el-icon-loading',
                 alias: '权限管理3',
-                value: {path: '/promiseManage'}
               },
               {
                 id: 4,
-                url: 'roleManage',
+                url: '/welcomeUsers1',
                 icon: 'el-icon-bell',
                 alias: '角色管理',
                 value: '/system/role'
               },
               {
                 id: 2,
-                url: 'menuManage',
+                url: '/welcomeUsers2',
                 icon: 'el-icon-edit',
                 alias: '菜单管理',
                 value: '/system/menu'
               },
               {
                 id: 5,
-                url: 'groupManage',
+                url: '/welcomeUsers3',
                 icon: 'el-icon-mobile-phone\r\n',
                 alias: '分组管理',
                 value: '/system/group'
@@ -262,11 +267,17 @@
         ],
       }
     },
+    mounted() {
+      Bus.$on('reMenuAddTabs', resInfo => {
+        // console.log('index:------' + resInfo.routerUrl + '-------------' + resInfo.tabName)
+        this.$refs.navTabsIndex.addTab(resInfo.routerUrl,resInfo.tabName);
+      });
+    },
     methods: {
       //是否隐藏左侧菜单
       updateIsCollapse () {
         let _this = this.isCollapse
-        console.log(_this)
+        // console.log(_this)
 
         if (_this) {
           this.isCollapse = false
@@ -282,7 +293,7 @@
       },
       //父组件调用子组件方法 navTabsIndex
       showChildDeptTitle(routerUrl, tabName) {
-        // console.log('父组件' + routerUrl, tabName)
+        // console.log('父index]组件' + routerUrl, tabName)
         //父组件向子组件navTabsIndex 传值
         this.$refs.navTabsIndex.addTab(routerUrl,tabName);
       },
