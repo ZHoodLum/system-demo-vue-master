@@ -11,7 +11,7 @@ module.exports = {
     // 本地和局域网
     // host: '0.0.0.0',
     // 访问的端口
-    port: 8080,
+    port: 8087,
     // 配置自动启动浏览器
     autoOpenBrowser: true,
     errorOverlay: true,

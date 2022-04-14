@@ -9,21 +9,21 @@
         <h5 class="title fontColor">系统登陆</h5>
 
         <el-form-item prop="userAccount">
-          <el-input type="text" v-model="loginForm.userAccount" auto-complete="off" placeholder="账号">
+          <el-input type="text" v-model="loginForm.userAccount" auto-complete="off" placeholder="账号" style="margin-top: 10px;font-size: 11px;">
             <span slot="prefix">
-            <svg-icon icon-class="user" class="fontColor"></svg-icon>
-          </span>
+              <svg-icon icon-class="user" class="fontColor"></svg-icon>
+            </span>
           </el-input>
         </el-form-item>
 
         <el-form-item prop="userPassword">
-          <el-input :type="pwdType" v-model="loginForm.userPassword" placeholder="密码">
-             <span slot="prefix">
+          <el-input :type="pwdType" v-model="loginForm.userPassword" placeholder="密码" style="margin-top: 10px;font-size: 10px">
+            <span slot="prefix">
                 <svg-icon icon-class="password" class="fontColor"></svg-icon>
-              </span>
+            </span>
             <span slot="suffix" @click="showPwd">
                 <svg-icon icon-class="eye" class="fontColor eye-main"></svg-icon>
-              </span>
+            </span>
           </el-input>
         </el-form-item>
 
@@ -90,7 +90,7 @@
             // 页面跳转
             this.$router.push('/main')
           } else {
-            this.$message.error('error submit!!')
+            this.$message.error('请填写账号或密码!')
             return false
           }
         })
@@ -98,11 +98,18 @@
       //重置
       resetForm (formName) {
         this.$refs[formName].resetFields()
-        this.$message({
+
+        this.$notify({
           showClose: true,
-          message: '重置信息成功！',
-          type: 'success'
-        })
+          type: 'success',
+          title: '提示: ',
+          message: '重置信息成功'
+        });
+        // this.$message({
+        //   showClose: true,
+        //   message: '重置信息成功！',
+        //   type: 'success'
+        // })
       },
       showPwd () {
         if (this.pwdType === 'password') {
@@ -129,9 +136,11 @@
     border-radius: 8px;
     -moz-border-radius: 8px;
     background-clip: padding-box;
-    margin: 50px auto;
-    width: 150px;
-    padding: 5px 15px 5px 15px;
+    margin: 8% auto;
+    //height: 600px;
+    width: 570px;
+    //width: 20%;
+    padding: 10px 20px 10px 20px;
     /*border: 1px solid #eaeaea;*/
     box-shadow: 0 0 25px #cac6c6;
     border-top: 10px solid #409EFF;
@@ -141,8 +150,8 @@
 
   /*标题*/
   .title {
-    padding: 5px 0px 5px 0px;
-    font-size: 13px;
+    padding: 10px 0px 20px 0px;
+    font-size: 20px;
     margin: 0 auto;
     text-align: center;
     color: #288aff;
@@ -161,7 +170,7 @@
 
   /*记住密码*/
   .remember {
-    margin: 0px 0px 15px 0px;
+    margin: 0px 0px 0px 10px;
   }
 
   .login-center-layout {
@@ -171,7 +180,7 @@
     height: auto;
     max-width: 100%;
     max-height: 100%;
-    top: 70px;
+    top: 20%;
     /*防止此DIV把上一层div(users-container)覆盖掉*/
     position: absolute;
   }

@@ -20,7 +20,7 @@ VueRouter.prototype.replace = function replace (to) {
 const login = () => import('../views/users/login.vue')
 const promiseManage = () => import('../views/users/promiseManage.vue')
 const welcomeUsers = () => import('../views/users/welcomeUsers.vue')
-const welcomeUsers2 = () => import('../views/users/welcomeUsers2.vue')
+// const welcomeUsers2 = () => import('../views/users/welcomeUsers2.vue')
 
 //主页
 const homeIndex = () => import('../views/home/index.vue')
@@ -31,8 +31,8 @@ export default new VueRouter({
       name: 'login', path: '/', component: login
     },
     {
-      name: 'main',
-      path: '/main',
+      name: 'home',
+      path: '/home',
       component: homeIndex,
       //左侧菜单下的组件全部属于
       children: [
@@ -47,19 +47,20 @@ export default new VueRouter({
           name:'promiseManage',
           path: '/promiseManage',
           component: promiseManage
-        },
-        //二级菜单
-        {
-          name: 'systemManage',
-          path: '/systemManage',
-          children: [
-            {
-              name:'welcomeUsers2',
-              path: '/welcomeUsers2',
-              component: welcomeUsers2
-            }
-          ]
         }
+        // ,
+        //二级菜单
+        // {
+        //   name: 'systemManage',
+        //   path: '/systemManage',
+        //   children: [
+        //     {
+        //       name:'welcomeUsers2',
+        //       path: '/welcomeUsers2',
+        //       component: welcomeUsers2
+        //     }
+        //   ]
+        // }
 
       ]
     }

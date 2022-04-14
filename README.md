@@ -6,7 +6,12 @@
 
 ``` bash
 # install dependencies
+npm install webpack-cli -g
 npm install
+npm i ajv@latest
+npm audit fix
+npm audit fix --force
+npm fund
 
 # serve with hot reload at localhost:8080
 npm run dev
@@ -40,11 +45,15 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 * elementUI组件库
 > import elementUI from 'element-ui'
+> npm i element-ui --save
 
 > import 'element-ui/lib/theme-chalk/index.css'
 
 * 自适应分辨率
 > import 'lib-flexible'
+> npm i lib-flexible --save
+> npm install px2rem-loader --save-dev
+> npm i postcss-px2rem-exclude -D
 
 > 详细设置请查看笔记[前端框架]------>[VUE遇到的问题]------>[34、（最终版本）Vue使用lib-flexible自适应以及引用lib-flexible导致第三方Ui库缩小]
 
